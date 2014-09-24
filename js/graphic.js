@@ -59,12 +59,14 @@ function render(id, container_width) { //consider container width vs. graphic wi
     function ifMobile (w) {
         if(w < mobileThreshold){
            config.labelClass = 'labelSmall';
-           config.tickSize = '5'
+           config.tickSize = '5';
+           config.labelText = "Strikes / 10k Flights"
            }
 
         else{
             config.tickSize = '10';
             config.labelClass = 'label';
+            config.labelText = "$ of Wildlife Strikes Per 10,000 Flights"
         }
     }
     //end mobile check
@@ -109,8 +111,6 @@ function render(id, container_width) { //consider container width vs. graphic wi
         .attr("height", 100)
         .attr("width", 400)
         .attr("transform", "translate(0,0)");
-
-
 
     legend.selectAll("rect")
         .data(["line1", "line2", "line3"])
@@ -174,7 +174,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
                 .attr("class", config.labelClass)
-                .text("# of Wildlife Strikes Per 10,000 Flights");  
+                .text(config.labelText);  
 
         var line = d3.svg.line()
             .x(function(d) { return x(d.year); })
@@ -269,7 +269,6 @@ function render(id, container_width) { //consider container width vs. graphic wi
             .tickSize(5,5,0)
             .scale(y);
 
-
         chart2.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -285,7 +284,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
                 .attr("class", config.labelClass)
-                .text("# of Wildlife Strikes Per 10,000 Flights"); 
+                .text(config.labelText); 
 
         var line = d3.svg.line()
             .x(function(d) { return x(d.YEAR); })
