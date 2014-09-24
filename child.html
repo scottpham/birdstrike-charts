@@ -24,7 +24,10 @@
  
     <!--BOOTSTRAP CSS-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    
+
+    <!--d3.tip-->
+    <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 
     <!--OPTIONAL LINKS-->
@@ -167,6 +170,27 @@
         .legend text {
             font: 14px sans-serif;
         }
+
+        .focus line {
+            stroke: gray;
+            stroke-width: 1px;
+        }
+
+        
+        .focus rect {            
+          text-align: center;           
+          width: 160px;                  
+          height: 128px;                 
+          padding: 2px;             
+          font: 12px sans-serif;  
+          /*color: white;      */
+          background: darkgray;   
+          border: 0px;      
+          border-radius: 8px;                  
+        }
+
+
+
 
         </style>
 </head>

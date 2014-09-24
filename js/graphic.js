@@ -39,8 +39,6 @@ function render(id, container_width) { //consider container width vs. graphic wi
                       "line2" : colors.orange3,
                       "line3" : colors.blue3  }
 
-    console.log(lineColor);
-
     //standard margins
     var margin = {
         top: 25,
@@ -317,19 +315,79 @@ function render(id, container_width) { //consider container width vs. graphic wi
             .attr("d", line3)
             .style("stroke", lineColor.line3);
 
-
         //mouseover effects
         var focus = chart2.append("g")
           .attr("class", "focus")
           .style("display", "none");
 
+       /* focus.append("rect")
+            .attr("width", 75)
+            .attr("height", 75)
+            .attr("transform", "translate(" + 30 + "," + 30 + ")")
+            .attr("class", "tooltip"); */
+
+        focus.append("line")
+            .attr("height", -height)
+            .attr("y1", 0)
+            .attr("y2", height)
+            .attr("x1", 100)
+            .attr("x2", 100)
+            .attr("class", "focus");
+
         focus.append("circle")
-          .attr("r", 6);
+            .attr("r", 6)
+            .attr("class", "circle OAK");
+
+        focus.append("circle")
+            .attr("r", 6)
+            .attr("class", "circle SFO");
+
+        focus.append("circle")
+            .attr("r", 6)
+            .attr("class", "circle SJC");
 
         focus.append("text")
-          .attr("x", 9)
+          .attr("x", -45)
           .attr("dy", ".35em");
 
+        //group to hold legend blocks
+        focus.append("g")
+
+        //legend blocks
+        focus.select("g").selectAll("rect")
+            .data(["line1", "line2", "line3"])
+            .enter().append("rect")
+                .attr("x", -75)
+                .attr("y", function (d, i) { return (i * 30) - 70;})
+                .attr("width", 10)
+                .attr("height", 10)
+                .style("fill", function(d, i){
+                    var color = lineColor[d];
+                    return color; 
+                });
+
+        valueArray = ["OAK", "SFO", "SJC"]
+        
+        /*focus.select("g").selectAll("text")
+            .data(data)
+        .enter().append("text")
+            .text( function(d, i) {  return d[valueArray[i]]; })
+                .attr("x", -75)
+                .attr("y", function(d, i) { return (i * 30) - 70;} )
+                .attr("text-anchor", "start")
+                .attr("dy", "1.1em"); */
+
+        focus.select("g").selectAll("text")
+            .data(data)
+        .enter().append("text")
+            //.text( function(d, i) {  return d[valueArray[i]] * 10; })
+            .attr("x", -75)
+            .attr("y", function(d, i) { return (i * 30) - 70;} )
+            .attr("text-anchor", "start")
+            .attr("class", function(d,i) { return "value-" + valueArray[i]; })
+            .attr("dy", "1.1em");
+
+        //mouseover functions
         chart2.append("rect")
           .attr("class", "overlay") //invisible layer that captures pointer events
           .attr("width", width + margin.left + margin.right) //adjust these if the chart isn't capturing pointer events
@@ -345,14 +403,30 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 i = bisectDate(data, x0, 1),
                 d0 = data[i - 1],
                 d1 = data[i],
-                d = x0 - d0.YEAR > d1.YEAR - x0 ? d1 : d0;
-            focus.attr("transform", "translate(" + x(d.YEAR) + "," + y(d.OAK_PER10K) + ")");
-            focus.select("text")
-                .attr("transform", "translate(" + -18 + "," + -20 + ")")
+                d = x0 - d0.YEAR > d1.YEAR - x0 ? d1 : d0,
+                xmouse = d3.mouse(this)[0],
+                ymouse = d3.mouse(this)[1];
+            focus.select(".circle.OAK").attr("transform", "translate(" + x(d.YEAR) + "," + y(d.OAK_PER10K) + ")");
+            focus.select(".circle.SJC").attr("transform", "translate(" + x(d.YEAR) + "," + y(d.SJC_PER10K) + ")");
+            focus.select(".circle.SFO").attr("transform", "translate(" + x(d.YEAR) + "," + y(d.SFO_PER10K) + ")");
+            
+            focus.select(".value-OAK")
                 .text(format(d.OAK_PER10K));
+
+            focus.select(".value-SFO")
+                .text(format(d.SFO_PER10K));
+
+            focus.select(".value-SJC")
+                .text(format(d.SJC_PER10K));
+
+            focus.select("g").attr("transform", "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] + ")");
+
+            focus.select("line").attr("x1", x(d.YEAR))
+                .attr("x2", x(d.YEAR));
         }
     //end of d3.csv
     });
+
 
 
 
