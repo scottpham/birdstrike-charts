@@ -97,7 +97,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
 
     var yAxis = d3.svg.axis()
         .orient("left")
-        .ticks(10)
+        .ticks(config.tickSize)
         .tickSize(5,5,0);
 
 
@@ -155,7 +155,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
 
         var yAxis = d3.svg.axis()
             .orient("left")
-            .ticks(10)
+            .ticks(config.tickSize)
             .tickSize(5,5,0)
             .scale(y);
 
@@ -231,7 +231,8 @@ function render(id, container_width) { //consider container width vs. graphic wi
             focus.attr("transform", "translate(" + x(d.year) + "," + y(d.strikes) + ")");
             focus.select("text")
                 .attr("transform", "translate(" + -18 + "," + -20 + ")")
-                .text(format(d.strikes));
+                .text(format(d.strikes))
+                .attr("class", config.labelClass);
         }//end mouseover effects
 
     //end of d3.csv
@@ -256,7 +257,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
             y = d3.scale.linear().range([height, 0]).domain([0, d3.max(data, function(d) { return d.SJC_PER10K;})]);
 
         var xAxis = d3.svg.axis()
-            .ticks(10)
+            .ticks(config.tickSize)
             .tickFormat(d3.format("f"))
             .tickSize(8,8,8)
             .orient("bottom")
@@ -264,7 +265,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
 
         var yAxis = d3.svg.axis()
             .orient("left")
-            .ticks(10)
+            .ticks(config.tickSize)
             .tickSize(5,5,0)
             .scale(y);
 
@@ -368,7 +369,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
             .data(["line1", "line2", "line3"])
             .enter().append("rect")
                 .attr("x", -75)
-                .attr("y", function (d, i) { return (i * 30) - 70;})
+                .attr("y", function (d, i) { return (i * 20) - 70;})
                 .attr("width", 10)
                 .attr("height", 10)
                 .style("fill", function(d, i){
@@ -382,7 +383,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
             .data(data)
         .enter().append("text")
             .attr("x", -60)
-            .attr("y", function(d, i) { return (i * 30) - 70;} )
+            .attr("y", function(d, i) { return (i * 20) - 70;} )
             .attr("text-anchor", "start")
             .attr("class", function(d,i) { return "value-" + valueArray[i]; })
             .attr("dy", "0.7em");
