@@ -41,10 +41,10 @@ function render(id, container_width) { //consider container width vs. graphic wi
 
     //standard margins
     var margin = {
-        top: 25,
-        right: 25,
-        bottom: 20,
-        left: 60
+        top: 30,
+        right: 30,
+        bottom: 30,
+        left: 50
     };
 
     var mobile = {};
@@ -52,7 +52,8 @@ function render(id, container_width) { //consider container width vs. graphic wi
     //check for mobile
     function ifMobile (w) {
         if(w < mobileThreshold){
-        }
+           }
+
         else{
         }
     }
@@ -68,7 +69,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
 
     var chart1 = d3.select("#graphic").append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.top + margin.bottom)
         .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -99,10 +100,12 @@ function render(id, container_width) { //consider container width vs. graphic wi
         .attr("width", 400)
         .attr("transform", "translate(0,0)");
 
+
+
     legend.selectAll("rect")
         .data(["line1", "line2", "line3"])
         .enter().append("rect")
-            .attr("x", function (d, i) { return i * 250; })
+            .attr("x", function (d, i) { return i * 100; })
             .attr("y", -25)
             .attr("width", 20)
             .attr("height", 20)
@@ -112,10 +115,10 @@ function render(id, container_width) { //consider container width vs. graphic wi
             });
 
     legend.selectAll("text")
-        .data(["OAK (Oakland International)", "SFO (San Francico International)", "SJC (San Jose International)"])
+        .data(["OAK", "SFO", "SJC"])
         .enter().append("text")
             .text( function(d) {  return d; })
-        .attr("x", function(d, i) { return 25 + i * 250; })
+        .attr("x", function(d, i) { return 25 + i * 100; })
         .attr("y", -25)
         .attr("text-anchor", "start")
         .attr("dy", "1.1em");
@@ -160,6 +163,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("x", -5)
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
+                .attr("class", "label")
                 .text("# of Wildlife Strikes Per 10,000 Flights");  
 
         var line = d3.svg.line()
@@ -197,9 +201,10 @@ function render(id, container_width) { //consider container width vs. graphic wi
           .attr("x", 9)
           .attr("dy", ".35em");
 
+        //mouseover overlay
         chart1.append("rect")
-          .attr("class", "overlay") //invisible layer that captures pointer events
-          .attr("width", width + margin.top + margin.bottom) //adjust these if the chart isn't capturing pointer events
+          .attr("class", "overlay") 
+          .attr("width", width + margin.left + margin.right) //adjust these if the chart isn't capturing pointer events
           .attr("height", height + margin.top + margin.bottom)
           .on("mouseover", function() { focus.style("display", null); })
           .on("mouseout", function() { focus.style("display", "none"); })
@@ -268,6 +273,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("x", -5)
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
+                .attr("class", "label")
                 .text("# of Wildlife Strikes Per 10,000 Flights"); 
 
         var line = d3.svg.line()
