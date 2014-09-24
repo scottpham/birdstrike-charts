@@ -1,5 +1,5 @@
  //globals
- var mobileThreshold = 300,
+ var mobileThreshold = 350,
     aspect_width = 16,
     aspect_height = 9,
     pymChild = null;
@@ -20,6 +20,12 @@ var colors = {
 /*
  * Render the graphic
  */
+
+ var config = {
+    'tickSize' : '10',
+    'labelClass' : 'label'
+
+ }
 
 function draw_graphic(width){
     if (Modernizr.svg){
@@ -52,9 +58,13 @@ function render(id, container_width) { //consider container width vs. graphic wi
     //check for mobile
     function ifMobile (w) {
         if(w < mobileThreshold){
+           config.labelClass = 'labelSmall';
+           config.tickSize = '5'
            }
 
         else{
+            config.tickSize = '10';
+            config.labelClass = 'label';
         }
     }
     //end mobile check
@@ -80,7 +90,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var xAxis = d3.svg.axis()
-        .ticks(10)
+        .ticks(config.tickSize)
         .tickFormat(d3.format("f"))
         .tickSize(8,8,8)
         .orient("bottom");
@@ -137,7 +147,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
             y = d3.scale.linear().range([height, 0]).domain([0, d3.max(data, function(d) { return d.strikes;})]);
 
         var xAxis = d3.svg.axis()
-            .ticks(10)
+            .ticks(config.tickSize)
             .tickFormat(d3.format("f"))
             .tickSize(8,8,8)
             .orient("bottom")
@@ -163,7 +173,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("x", -5)
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
-                .attr("class", "label")
+                .attr("class", config.labelClass)
                 .text("# of Wildlife Strikes Per 10,000 Flights");  
 
         var line = d3.svg.line()
@@ -273,7 +283,7 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 .attr("x", -5)
                 .attr("dy", "0.71em")
                 .style("text-anchor", "end")
-                .attr("class", "label")
+                .attr("class", config.labelClass)
                 .text("# of Wildlife Strikes Per 10,000 Flights"); 
 
         var line = d3.svg.line()
