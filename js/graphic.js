@@ -320,12 +320,6 @@ function render(id, container_width) { //consider container width vs. graphic wi
           .attr("class", "focus")
           .style("display", "none");
 
-       /* focus.append("rect")
-            .attr("width", 75)
-            .attr("height", 75)
-            .attr("transform", "translate(" + 30 + "," + 30 + ")")
-            .attr("class", "tooltip"); */
-
         focus.append("line")
             .attr("height", -height)
             .attr("y1", 0)
@@ -367,25 +361,15 @@ function render(id, container_width) { //consider container width vs. graphic wi
                 });
 
         valueArray = ["OAK", "SFO", "SJC"]
-        
-        /*focus.select("g").selectAll("text")
-            .data(data)
-        .enter().append("text")
-            .text( function(d, i) {  return d[valueArray[i]]; })
-                .attr("x", -75)
-                .attr("y", function(d, i) { return (i * 30) - 70;} )
-                .attr("text-anchor", "start")
-                .attr("dy", "1.1em"); */
 
         focus.select("g").selectAll("text")
             .data(data)
         .enter().append("text")
-            //.text( function(d, i) {  return d[valueArray[i]] * 10; })
-            .attr("x", -75)
+            .attr("x", -60)
             .attr("y", function(d, i) { return (i * 30) - 70;} )
             .attr("text-anchor", "start")
             .attr("class", function(d,i) { return "value-" + valueArray[i]; })
-            .attr("dy", "1.1em");
+            .attr("dy", "0.7em");
 
         //mouseover functions
         chart2.append("rect")
